@@ -3,12 +3,9 @@
 
 <head>
     <meta charset="utf-8">
-
     <title>grow</title>
-
     <meta name="description" content="get better every day">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
     <link href="css/styles.css" rel="stylesheet" media="all">
 </head>
@@ -21,12 +18,27 @@
             </div>
         </div>
     </div>
-
     <div class="container">
         <div class="starter-template">
             <button class="btn"><span class="glyphicon glyphicon-plus"></span> add line</button>
         </div>
     </div>
+
+    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore-min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.2/backbone-min.js"></script>
+    <script>
+    var Router = Backbone.Router.extend({
+        routes: {
+            "": "home"
+        }
+    });
+    var router = new Router;
+    router.on('route:home', function() {
+		console.log("on home fired")
+    })
+    Backbone.history.start();
+    </script>
 </body>
 
 </html>
