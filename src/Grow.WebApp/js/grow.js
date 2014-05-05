@@ -1,3 +1,7 @@
+var Line = Backbone.Model.extend({
+    urlRoot: '/lines'
+});
+
 var DashboardView = Backbone.View.extend({
     el: '.dashboard',
 
@@ -10,16 +14,28 @@ var DashboardView = Backbone.View.extend({
 
     events: {
         'click button.add-line': 'enterLineName',
-        'blur input': 'cancelAdding'
+        'blur input': 'cancelAdding',
+        'keypress input': 'saveLine'
     },
     enterLineName: function() {
         this.$addButton.hide();
         this.$newLineName.show();
         this.$newLineName.focus();
     },
-    cancelAdding: function(ev) {
+    cancelAdding: function() {
         this.$newLineName.hide();
         this.$addButton.show();
+    },
+    saveLine: function(event) {
+        if (event.keyCode == 13) {
+            var line = new Line({
+                name: this.$newLineName.val()
+            });
+            line.save();
+            router.navigate('', {
+                trigger: true
+            });
+        }
     }
 });
 
