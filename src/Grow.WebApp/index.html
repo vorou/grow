@@ -19,26 +19,14 @@
         </div>
     </div>
     <div class="container">
-        <div class="starter-template">
-            <button class="btn"><span class="glyphicon glyphicon-plus"></span> add line</button>
+        <div class="dashboard">
+            <button class="btn add-line"><span class="glyphicon glyphicon-plus"></span> add line</button>
         </div>
     </div>
 
     <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore-min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.2/backbone-min.js"></script>
-    <script>
-    var Router = Backbone.Router.extend({
-        routes: {
-            "": "home"
-        }
-    });
-    var router = new Router;
-    router.on('route:home', function() {
-		console.log("on home fired")
-    })
-    Backbone.history.start();
-    </script>
+    <script src="js/grow.js"></script>
 </body>
-
 </html>
