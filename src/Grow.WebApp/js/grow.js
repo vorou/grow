@@ -1,17 +1,25 @@
 var DashboardView = Backbone.View.extend({
     el: '.dashboard',
 
-    render: function() {
-        console.log('render fired');
+    initialize: function() {
+        this.$addButton = this.$el.find('button.add-line');
+        this.$newLineName = $('<input type="text" class="new-line-name form-control" placeholder="name" />');
+        this.$newLineName.hide();
+        this.$el.append(this.$newLineName);
     },
 
     events: {
-        "click button.add-line": "addLine"
+        'click button.add-line': 'enterLineName',
+        'blur input': 'cancelAdding'
     },
-    addLine: function(ev) {
-        var $button = $(ev.currentTarget);
-        $button.hide();
-        this.$el.append('<input type="text" class="form-control" placeholder="name" />');
+    enterLineName: function() {
+        this.$addButton.hide();
+        this.$newLineName.show();
+        this.$newLineName.focus();
+    },
+    cancelAdding: function(ev) {
+        this.$newLineName.hide();
+        this.$addButton.show();
     }
 });
 
@@ -25,6 +33,5 @@ var Router = Backbone.Router.extend({
 var router = new Router;
 router.on('route:home', function() {
     dashboardView.render();
-    console.log("on home fired");
 })
 Backbone.history.start();
