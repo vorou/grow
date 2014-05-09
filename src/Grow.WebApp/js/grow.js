@@ -1,3 +1,7 @@
+$.ajaxPrefilter(function(options, originalOptions, jqXHR) {
+    options.url = 'http://localhost:7820' + options.url;
+});
+
 var Line = Backbone.Model.extend({
     urlRoot: '/lines'
 });
@@ -14,7 +18,7 @@ var DashboardView = Backbone.View.extend({
 
     events: {
         'click button.add-line': 'enterLineName',
-        'blur input': 'cancelAdding',
+        'blur input': 'hideLineNameInput',
         'keypress input': 'saveLine'
     },
     enterLineName: function() {
@@ -22,7 +26,7 @@ var DashboardView = Backbone.View.extend({
         this.$newLineName.show();
         this.$newLineName.focus();
     },
-    cancelAdding: function() {
+    hideLineNameInput: function() {
         this.$newLineName.hide();
         this.$addButton.show();
     },
@@ -31,9 +35,14 @@ var DashboardView = Backbone.View.extend({
             var line = new Line({
                 name: this.$newLineName.val()
             });
-            line.save();
-            router.navigate('', {
-                trigger: true
+            line.save(null, {
+                success: function() {
+                    dashboardView.hideLineNameInput();
+                },
+                error: function(model, error) {
+                    console.log(model.toJSON());
+                    console.log('error.responseText');
+                }
             });
         }
     }
