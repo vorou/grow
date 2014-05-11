@@ -1,3 +1,14 @@
+.navbar {
+    margin-bottom: 5px;
+}
 .navbar-brand {
-	font-size: 25px;
+    font-size: 25px;
+}
+.line {
+    padding: 10px;
+    margin: 5px 0;
+    background-color: #99D6EB;
+}
+.line p {
+    padding: 9px 0 0 5px;
 }

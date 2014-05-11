@@ -28,7 +28,7 @@
             this.$newLineName.hide();
             this.$el.append(this.$newLineName);
 
-            this.$lines = $('<ul></ul>');
+            this.$lines = $('<div class="lines"></div>');
             this.$el.prepend(this.$lines);
         },
 
@@ -36,7 +36,7 @@
             var self = this;
             self.$lines.empty();
             lineList.forEach(function(line) {
-                var $line = $('<li>' + line.get('name') + '</li>');
+                var $line = $('<div class="line"><p>' + line.get('name') + '</p></div>');
                 self.$lines.append($line);
             });
         },
