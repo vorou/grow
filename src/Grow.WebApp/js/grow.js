@@ -1,4 +1,4 @@
-$.ajaxPrefilter(function (options, originalOptions, jqXHR) {
+$.ajaxPrefilter(function(options, originalOptions, jqXHR) {
     options.url = 'http://localhost:7820' + options.url;
 });
 
@@ -12,9 +12,11 @@ var LineList = Backbone.Collection.extend({
 });
 
 var lineList = new LineList();
-lineList.fetch({success: function (collection, response, options) {
-    console.log(collection);
-}});
+lineList.fetch({
+    success: function(collection, response, options) {
+        console.log(collection);
+    }
+});
 lineList.on('add', function() {
     dashboardView.render();
 });
