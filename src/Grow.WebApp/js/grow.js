@@ -1,9 +1,22 @@
-$.ajaxPrefilter(function(options, originalOptions, jqXHR) {
+$.ajaxPrefilter(function (options, originalOptions, jqXHR) {
     options.url = 'http://localhost:7820' + options.url;
 });
 
 var Line = Backbone.Model.extend({
     urlRoot: '/lines'
+});
+
+var LineList = Backbone.Collection.extend({
+    model: Line,
+    url: '/lines'
+});
+
+var lineList = new LineList();
+lineList.fetch({success: function (collection, response, options) {
+    console.log(collection);
+}});
+lineList.on('add', function() {
+    dashboardView.render();
 });
 
 var DashboardView = Backbone.View.extend({
@@ -14,12 +27,24 @@ var DashboardView = Backbone.View.extend({
         this.$newLineName = $('<input type="text" class="new-line-name form-control" placeholder="name" />');
         this.$newLineName.hide();
         this.$el.append(this.$newLineName);
+
+        this.$lines = $('<ul></ul>');
+        this.$el.prepend(this.$lines);
+    },
+
+    render: function() {
+        var self = this;
+        self.$lines.empty();
+        lineList.forEach(function(line) {
+            var $line = $('<li>' + line.get('name') + '</li>');
+            self.$lines.append($line);
+        });
     },
 
     events: {
         'click button.add-line': 'enterLineName',
         'blur input': 'hideLineNameInput',
-        'keypress input': 'saveLine'
+        'keypress input': 'handleLineNameInputKeypress'
     },
     enterLineName: function() {
         this.$addButton.hide();
@@ -30,20 +55,14 @@ var DashboardView = Backbone.View.extend({
         this.$newLineName.hide();
         this.$addButton.show();
     },
-    saveLine: function(event) {
+    handleLineNameInputKeypress: function(event) {
         if (event.keyCode == 13) {
+            this.hideLineNameInput();
             var line = new Line({
                 name: this.$newLineName.val()
             });
-            line.save(null, {
-                success: function() {
-                    dashboardView.hideLineNameInput();
-                },
-                error: function(model, error) {
-                    console.log(model.toJSON());
-                    console.log('error.responseText');
-                }
-            });
+            lineList.create(line);
+            this.$newLineName.val('');
         }
     }
 });

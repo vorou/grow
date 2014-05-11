@@ -7,9 +7,11 @@ namespace Grow.WebService
 {
     public class LineModule : NancyModule
     {
+        private static readonly List<Line> lines = new List<Line>();
+
         public LineModule()
         {
-            var lines = new List<Line>();
+            Get["/lines"] = _ => lines;
 
             Post["/lines"] = _ =>
                              {
