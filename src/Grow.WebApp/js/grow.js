@@ -33,12 +33,10 @@
     var LineListView = Backbone.View.extend({
         el: '.dashboard',
         initialize: function() {
-            this.$addButton = this.$el.find('button.add-line');
-            this.$newLineName = $('<input type="text" class="new-line-name form-control" placeholder="name" />');
+            this.$newLineName = $('.new-line-name');
             this.$newLineName.hide();
-            this.$el.append(this.$newLineName);
-            this.$lines = $('<div class="lines"></div>');
-            this.$el.prepend(this.$lines);
+            this.$lines = $('.lines');
+            this.$addButton = $('.add-line');
             _.bindAll(this, "renderLine");
         },
         renderLine: function(model) {
@@ -53,11 +51,11 @@
             this.collection.each(this.renderLine);
         },
         events: {
-            'click .add-line': 'enterLineName',
+            'click .add-line': 'showLineNameInput',
             'blur input': 'hideLineNameInput',
             'keypress input': 'handleLineNameInputKeypress'
         },
-        enterLineName: function() {
+        showLineNameInput: function() {
             this.$addButton.hide();
             this.$newLineName.show();
             this.$newLineName.focus();
