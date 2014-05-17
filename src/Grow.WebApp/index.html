@@ -1,32 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="utf-8">
-    <title>grow</title>
-    <meta name="description" content="get better every day">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
-    <link href="css/styles.css" rel="stylesheet" media="all">
-</head>
-
-<body>
-    <div class="navbar navbar-default" role="navigation">
-        <div class="container">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="#">grow</a>
+    <head>
+        <meta charset="utf-8">
+        <title>grow</title>
+        <meta name="description" content="get better every day">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+        <link href="css/styles.css" rel="stylesheet" media="all">
+    </head>
+    <body>
+        <div class="navbar navbar-default" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#">grow</a>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="container">
-        <div class="dashboard">
-            <button class="btn add-line"><span class="glyphicon glyphicon-plus"></span> add line</button>
+        <div class="container">
+            <div class="dashboard">
+                <button class="btn add-line"><span class="glyphicon glyphicon-plus"></span> add line</button>
+            </div>
         </div>
-    </div>
 
-    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore-min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.2/backbone-min.js"></script>
-    <script src="js/grow.js"></script>
-</body>
+        <script id="line-template" type="text/x-handlebars-template">
+            <div class="line">
+                <button class="btn remove-line"><span class="glyphicon glyphicon-trash"></span></button> <span class="line-name">{{name}}</span>
+            </div>
+        </script>
+
+        <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore-min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.2/backbone-min.js"></script>
+        <script src="js/handlebars-v1.3.0.js"></script>
+        <script src="js/grow.js"></script>
+    </body>
 </html>
