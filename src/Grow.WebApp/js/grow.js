@@ -4,9 +4,7 @@
         options.url = 'http://localhost:7820' + options.url;
     });
 
-    var Line = Backbone.Model.extend({
-        urlRoot: '/lines'
-    });
+    var Line = Backbone.Model.extend({});
 
     var LineList = Backbone.Collection.extend({
         model: Line,
@@ -16,10 +14,25 @@
     var lineList = new LineList();
     lineList.fetch();
     lineList.on('add', function() {
-        dashboardView.render();
+        lineListView.render();
     });
 
-    var DashboardView = Backbone.View.extend({
+    var LineView = Backbone.View.extend({
+        className: 'line',
+        events: {
+            'click .remove-line': 'removeLine'
+        },
+
+        removeLine: function() {
+            console.log('removeLine fired!');
+        },
+
+        render: function() {
+            this.$el.append('<div class="line"><button class="btn remove-line"><span class="glyphicon glyphicon-trash"></span></button> <span class="line-name">' + this.model.get('name') + '</span></div>');
+        }
+    });
+
+    var LineListView = Backbone.View.extend({
         el: '.dashboard',
 
         initialize: function() {
@@ -30,19 +43,25 @@
 
             this.$lines = $('<div class="lines"></div>');
             this.$el.prepend(this.$lines);
+
+             _.bindAll(this, "renderLine");
+        },
+
+        renderLine: function(model) {
+            var lineView = new LineView({
+                model: model
+            });
+            lineView.render();
+            this.$lines.append(lineView.el);
         },
 
         render: function() {
-            var self = this;
-            self.$lines.empty();
-            lineList.forEach(function(line) {
-                var $line = $('<div class="line"><p>' + line.get('name') + '</p></div>');
-                self.$lines.append($line);
-            });
+            this.$lines.empty();
+            this.collection.each(this.renderLine);
         },
 
         events: {
-            'click button.add-line': 'enterLineName',
+            'click .add-line': 'enterLineName',
             'blur input': 'hideLineNameInput',
             'keypress input': 'handleLineNameInputKeypress'
         },
@@ -67,7 +86,9 @@
         }
     });
 
-    var dashboardView = new DashboardView();
+    var lineListView = new LineListView({
+        collection: lineList
+    });
 
     var Router = Backbone.Router.extend({
         routes: {
@@ -76,7 +97,7 @@
     });
     var router = new Router();
     router.on('route:home', function() {
-        dashboardView.render();
+        lineListView.render();
     });
     Backbone.history.start();
 }());

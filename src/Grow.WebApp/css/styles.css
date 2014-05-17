@@ -9,6 +9,6 @@
     margin: 5px 0;
     background-color: #99D6EB;
 }
-.line p {
-    padding: 9px 0 0 5px;
+.line-name {
+	padding: 0 0 0 5px;
 }
