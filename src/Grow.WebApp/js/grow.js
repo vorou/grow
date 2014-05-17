@@ -13,7 +13,7 @@
 
     var lineList = new LineList();
     lineList.fetch();
-    lineList.on('add', function() {
+    lineList.on('add remove', function() {
         lineListView.render();
     });
 
@@ -24,7 +24,7 @@
         },
 
         removeLine: function() {
-            console.log('removeLine fired!');
+            this.model.destroy();
         },
 
         render: function() {
