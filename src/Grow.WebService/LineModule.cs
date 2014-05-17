@@ -7,19 +7,21 @@ namespace Grow.WebService
 {
     public class LineModule : NancyModule
     {
-        private static readonly List<Line> lines = new List<Line>();
+        private static readonly Dictionary<Guid, Line> lines = new Dictionary<Guid, Line>();
 
         public LineModule()
         {
-            Get["/lines"] = _ => lines;
+            Get["/lines"] = _ => lines.Values;
 
             Post["/lines"] = _ =>
                              {
                                  var line = this.Bind<Line>();
                                  line.Id = Guid.NewGuid();
-                                 lines.Add(line);
+                                 lines.Add(line.Id, line);
                                  return line;
                              };
+
+            Delete["/lines/{id}"] = _ => lines.Remove(_.id);
         }
     }
 
